@@ -1,0 +1,3 @@
+source ~/bin/autostart
+#exec ssh-agent ck-launch-session dbus-launch --sh-syntax --exit-with-session i3 > ~/session.log
+exec ssh-agent dbus-launch --sh-syntax --exit-with-session i3 > ~/session.log
