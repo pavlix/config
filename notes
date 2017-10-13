@@ -1,0 +1,16 @@
+
+  * systemctl set-default graphical.target
+  * add Lazarus to Firefox
+
+  * usermod -a -G vboxusers pavlix
+  * systemctl start vboxdrv
+  * use wiki instructions to install flash (and its repository)
+
+Development:
+
+
+TODO:
+
+  * proper firefox function
+  * laptop buttons
+ mkdir /mnt/temp

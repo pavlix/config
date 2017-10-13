@@ -1,0 +1,86 @@
+- hosts: devel-laptop
+  become: yes
+  tasks:
+#    - name: refresh and update packages
+#      zypper: name=* state=dist-upgrade
+# Not idempotent...
+#    - name: install repositories
+#      zypper_repository: repo={{ item }} state=present auto_import_keys=yes
+#      # Don't use .repo urls as they don't work with ansible
+#      with_items:
+#        - https://download.opensuse.org/repositories/home:/ojkastl_buildservice:/Vagrant/openSUSE_Leap_42.3/home:ojkastl_buildservice:Vagrant.repo
+#        - http://download.opensuse.org/repositories/home:/pavlix:/Ansible/openSUSE_Leap_42.3/home:pavlix:Ansible.repo
+# zypper ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_42.3/ packman
+    - name: install package patterns
+      zypper: name={{ item }} type=pattern state=present
+      with_items:
+        - devel_basis
+        - x11
+    - name: install individual packages
+      zypper: name={{ item }} type=package state=present
+      with_items:
+        - sudo
+        - i3
+        - i3status
+        - dmenu
+        - firefox
+        - chromium
+        - thunderbird
+        - lightdm
+        - libreoffice
+        - git
+        - python3-requests
+        - evince
+        - sshfs
+        - mosh
+        - scrot
+        - ansible
+        - tar
+        - ruby2.5-vagrant
+        - bsdtar # needed but not requested by vagrant
+        - virtualbox
+        - tig
+        #- psi
+        - whois
+        - osc
+        - NetworkManager
+        - NetworkManager-gnome
+        - avahi-utils
+        - sane
+        #- slock
+        - libavcodec56
+        - libavcodec57
+        - libavformat56
+        - libavformat57
+        - libavdevice56
+        - libavdevice57
+        # for brother scanner
+        #- libusb-0_1
+        # Desktop
+        - xinput
+        - ncdu
+        - rdiff-backup
+        - texlive-latex
+        - texlive-beamer
+        - texlive-babel-czech
+        - texlive-beamerdarkthemes
+        - python3-PyYAML
+    - name: install downloaded brother printer/scanner drivers
+      zypper: name=/home/pavlix/Downloads/{{ item }} type=package state=present disable_gpg_check=yes
+      with_items:
+        - dcp1610wlpr-3.0.1-1.i386.rpm
+        - dcp1610wcupswrapper-3.0.1-1.i386.rpm
+        - brscan4-0.4.4-4.x86_64.rpm
+    - name: create some directories
+      file: path={{ item }} state=directory
+      with_items:
+        - /mnt/temp
+    - name: start and enable services
+      systemd: name={{ item }} state=started enabled=yes
+      with_items:
+        - display-manager
+        - NetworkManager
+    - name: add me to the VirtualBox group
+      user: name=pavlix groups=vboxusers append=yes
+    - name: add vagrant symlink
+      file: state=link path=/usr/local/bin/vagrant src=/usr/bin/vagrant.ruby2.5
