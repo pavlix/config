@@ -1,0 +1,24 @@
+set tabstop=4 softtabstop=4 shiftwidth=4 autoindent expandtab
+filetype plugin indent on
+set list listchars=tab:»·,trail:·
+set nowrap
+set list listchars=nbsp:¬,tab:>·,extends:»,precedes:«,trail:·
+set nocscopeverbose
+autocmd Filetype tex setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType c setlocal shiftwidth=4 tabstop=4 noexpandtab
+autocmd FileType cpp setlocal shiftwidth=4 tabstop=4 noexpandtab
+autocmd FileType html setlocal indentexpr=
+autocmd FileType config setlocal shiftwidth=4 tabstop=4 noexpandtab
+autocmd BufNewFile,BufRead /home/pavlix/oss/glibc/* set tabstop=8 softtabstop=2 shiftwidth=2 expandtab
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufReadPost /home/pavlix/src/training/c/kernel/*.c set tabstop=8 softtabstop=8 shiftwidth=8 expandtab
+autocmd BufNewFile,BufReadPost *.tex set indentexpr=
+set viminfo='1000,<1000
+set tw=75
+set colorcolumn=80
+
+set exrc            " enable per-directory .vimrc files
+set secure          " disable unsafe commands in local .vimrc files
+
+set clipboard+=unnamedplus
+set fo+=l
